@@ -1,0 +1,56 @@
+<% layout("/layouts/boilerplate")%>
+
+    <h3>Create New Listing</h3>
+    <br/>
+    
+<div class="row mt-3">
+    <div class="col-8 offset-2"></div>
+    <form method="post" action="/listings"  novalidate class="needs-validation">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input name="listing[title]" placeholder="Enter Title" type="text" class="form-control" required>
+            <div class="valid-feedback">Nice Title</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input name="listing[description]"class="form-control" required/>
+            <div class="invalid-feedback">Please enter the Description of place</div>
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <input name="listing[gender]"class="form-control" required/>
+            <div class="invalid-feedback">fill up right info</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="category" class="form-label">category</label>
+            <input name="listing[category]"class="form-control" required/>
+            <div class="invalid-feedback">select right category</div>
+        </div>
+
+        
+
+
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label for="price" class="form-label">Price</label>
+                <input name="listing[price]" class="form-control" required>
+                <div class="invalid-feedback">Please enter the valid price</div>
+                </div>
+           
+
+        
+                
+       
+        <div class="mb-3">
+            <label for="image" class="form-label">Image URL</label>
+            <input name="listing[image]" placeholder="enter image URL/Link" class="form-control">
+        </div>
+<br/><br/>
+        <button class="btn btn-dark bt mt-3 col-1">add</button>
+
+    </form>
+
+</div>
+

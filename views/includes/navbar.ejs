@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNavDropdown">
+            <ul class="navbar-nav d-flex align-items-center">
+                <li class="nav-item"><a class="nav-link ms-4" href="/listings">Home</a></li>
+                <li class="nav-item"><a class="nav-link ms-4" href="/listings?gender=Male">Men</a></li>
+                <li class="nav-item"><a class="nav-link ms-4" href="/listings?gender=Female">Women</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ms-4" href="#" id="collectionsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Collections
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="collectionsDropdown">
+                        <li><a class="dropdown-item" href="/listings?category=Winterwear">Winterwear</a></li>
+                        <li><a class="dropdown-item" href="/listings?category=Streetwear">Streetwear</a></li>
+                        <li><a class="dropdown-item" href="/listings?category=Sportswear">Sportswear</a></li>
+                        <li><a class="dropdown-item" href="/listings?category=Anime">Anime</a></li>
+                    </ul>
+                </li>
+                <% if (currentUser) { %>
+                    <li class="nav-item">
+                        <a class="nav-link ms-4" href="/listings/new">Add New Listing</a>
+                    </li>
+                <% } %>
+                
+
+                <!-- LOGO: Centered in Navbar -->
+                <li class="nav-item mx-4">
+                    <a class="navbar-brand" href="/">
+                        <img loading="eager" fetchpriority="high"
+                             src="//www.snitch.co.in/cdn/shop/files/SNITCH_LOGO_NEW_BLACK.png?v=1721457834" 
+                             alt="SNITCH"
+                             style="height: 50px; width: auto; max-width: 150px; object-fit: contain;">
+                    </a>
+                </li>
+            </ul>
+        </div>
+  
+        <!-- Right-aligned search bar and icons -->
+        <div class="d-flex align-items-center gap-3">
+            <form class="d-flex" action="/listings" method="GET">
+                <input class="form-control me-2" type="text" name="search" placeholder="Search Listings..." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+  
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-regular fa-user fs-3"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <% if (!currentUser) { %>
+                        <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+                        <li><a class="dropdown-item" href="/login">Log In</a></li>
+                    <% } else { %>
+                        <li><a class="dropdown-item" href="/logout">Log Out</a></li>
+                    <% } %>
+                </ul>
+            </div>
+  
+            <a class="defg" href="/wishlist" style="color: inherit; text-decoration: none;">
+                <i class="fa-regular fa-heart fs-3"></i>
+            </a>
+            
+            <a class="def" href="/cart" style="color: inherit; text-decoration: none;">
+                <i class="fa-solid fa-cart-shopping fs-3"></i>
+            </a>
+            
+        </div>
+    </div>
+</nav>

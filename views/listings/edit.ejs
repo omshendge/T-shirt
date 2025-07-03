@@ -1,0 +1,61 @@
+
+<%layout("/layouts/boilerplate")%>
+    <h3>Edit</h3>
+    <div class="row">
+        <div class=" offset-2">
+    <form method="POST" action="/listings/<%=listing._id%>?_method=PUT">
+        <div>
+            <lable for="title" class="form-label">Title
+
+            </lable>
+            <input name="listing[title]" type="text" class="form-control" value="<%=listing.title%>">
+
+        </div>
+       
+        <br/>
+        <div>
+            <lable for="description" class="form-label">Description
+
+            </lable>
+            <textarea name="listing[description]" type="text" class="form-control"><%=listing.description%></textarea>
+        </div>
+        
+        <br/>
+        <div>
+            <lable for="gender" class="form-label">Gender
+
+            </lable>
+            <textarea name="listing[gender]" type="text" class="form-control"><%=listing.gender%></textarea>
+        </div>
+        
+        <br/>
+        <div>
+            <lable for="category" class="form-label">Category
+
+            </lable>
+            <textarea name="listing[category]" type="text" class="form-control"><%=listing.category%></textarea>
+        </div>
+        
+        <br/>
+        <div>
+            <lable for="image" class="form-label">Image_url
+
+            </lable>
+            <input name="listing[image]" type="text" value="<%=listing.image%>" class="form-control">
+            
+        </div>
+
+        <br/>
+        <div>
+            <lable for="price" class="form-label">price
+
+            </lable>
+            <input name="listing[price]" type="number" value="<%=listing.price%>" class="form-control">
+
+        </div>
+        
+        <br/>
+        <button class="btn btn-dark">Edit</button>
+    </form>
+</div>
+</div>

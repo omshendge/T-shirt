@@ -1,0 +1,40 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+
+<h1>Your Shopping Cart</h1>
+
+<% if (cart && cart.items.length > 0) { %>
+    <div class="row">
+        <% cart.items.forEach(item => { %>
+            <% if (item.product) { %>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="<%= item.product.image ? item.product.image : '/images/default.jpg' %>" 
+                             class="card-img-top" 
+                             alt="<%= item.product.title ? item.product.title : 'No Title' %>">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= item.product.title ? item.product.title : 'No Title' %></h5>
+                            <p class="card-text">Size: <%= item.size ? item.size : 'N/A' %></p>
+                            <p class="card-text">Quantity: <%= item.quantity %></p>
+                            <p class="card-text">Price: &#8377;<%= (item.quantity * item.price).toFixed(2) %></p>
+                            <form action="/cart/remove/<%= item.product._id %>" method="POST">
+                                <input type="hidden" name="size" value="<%= item.size %>">
+                                <button type="submit" class="btn btn-danger">Remove from Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        <% }) %>
+    </div>
+    <h3>Total:&#8377; <%= cart.items.reduce((total, item) => total + (item.quantity * item.price), 0).toFixed(2) %></h3>
+    <a href="/checkout" class="btn btn-primary">Proceed to Checkout</a>
+<% } else { %>
+    <p>Your cart is empty.</p>
+<% } %>
+
+<div class="d-flex justify-content-center mb-3">
+    <a href="/listings">Continue Shopping →</a>
+</div>
+
+</body>

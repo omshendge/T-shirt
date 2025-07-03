@@ -1,0 +1,224 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="<%= listing.image %>" class="product-image" alt="<%= listing.title %>">
+            </div>
+            <div class="col-md-6">
+                <h2><%= listing.title %></h2>
+                <p class="price">&#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %></p>
+                <p><%= listing.description %></p>
+
+                <!-- Add to Cart Form -->
+                <form action="/cart/add" method="POST">
+                    <input type="hidden" name="productId" value="<%= listing._id %>"> <!-- Send product ID -->
+
+                    <!-- Size Selection -->
+                    <div class="mb-3">
+                        <h5>Select Size:</h5>
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <% listing.size.forEach(size => { %>
+                                <input type="radio" class="btn-check" name="size" id="size-<%= size %>" value="<%= size %>" required>
+                                <label class="btn btn-outline-dark rounded-circle d-flex align-items-center justify-content-center"
+                                       for="size-<%= size %>" 
+                                       style="width: 50px; height: 50px; font-weight: bold;">
+                                    <%= size %>
+                                </label>
+                            <% }) %>
+                        </div> 
+                    </div>
+
+                    <!-- Quantity Selection -->
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity:</label>
+                        <input type="number" name="quantity" id="quantity" min="1" value="1" class="form-control w-50" required>
+                    </div>
+
+                    <!-- Add to Cart Button -->
+                    <button type="submit" class="btn btn-success btn-lg py-3 shadow-sm rounded-pill" name="action" value="addToCart">
+                        Add to Cart
+                    </button>
+
+                    <!-- Buy Now Button -->
+                    <button id="rzp-button1" class="btn btn-success  btn-lg py-3 shadow-sm rounded-pill">Buy now</button>
+                </form>
+
+                <!-- Add to Wishlist Form -->
+                <!-- Add to Wishlist Form -->
+<form action="/wishlist/add" method="POST" class="mt-3" id="wishlist-form">
+    <input type="hidden" name="productId" value="<%= listing._id %>">
+    <input type="hidden" name="size" id="wishlist-size" value="<%= listing.size[0] %>"> <!-- Default size (if no size selected) -->
+
+    <button type="submit" class="btn btn-outline-danger btn-lg py-3 shadow-sm rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+        </svg>
+        Add to Wishlist
+    </button>
+</form>
+
+                
+            </div>
+        </div>
+        <hr>
+
+        <!-- Customer Reviews Section -->
+        <h4>Customer Reviews</h4>
+        <% if(currentUser){ %>
+            <h5>Leave a Review</h5>
+            <form method="post" action="/listings/<%= listing._id %>/reviews" novalidate class="needs-validation">
+                <div class="mb-3 mt-3">
+                    <label class="form-label">Rating</label>
+                    <div class="rating-container">
+                        <span class="emoji" data-value="1">😡</span>
+                        <span class="emoji" data-value="2">☹️</span>
+                        <span class="emoji" data-value="3">😐</span>
+                        <span class="emoji" data-value="4">😊</span>
+                        <span class="emoji" data-value="5">😍</span>
+                    </div>
+                    <input type="hidden" id="rating" name="review[rating]" value="3">
+                </div>
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Comments</label>
+                    <textarea name="review[comment]" id="comment" cols="40" rows="5" class="form-control" required></textarea>
+                    <div class="invalid-feedback">Please submit some comments for review</div>
+                </div>
+                <button class="btn btn-outline-dark">Submit</button>
+            </form>
+        <% } %>
+        <hr>
+
+        <!-- Displaying Reviews -->
+        <% listing.reviews.forEach(review => { %>
+            <div class="card my-3">
+                <div class="card-body">
+                    <h5>@<%= review.author.username %></h5>
+                    <p><%= review.comment %></p>
+                    <p>⭐ <%= review.rating %> Stars</p>
+                </div>
+            </div>
+        <% }) %>
+
+        <!-- Edit/Delete for Listing Owner -->
+        <% if(currentUser && listing.owner._id.equals(currentUser._id)) { %>
+            <div class="btns d-flex justify-content-start mt-4">
+                <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark me-3">Edit</a>
+                <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        <% } %>
+        <hr/>
+
+        <!-- Link to More Listings -->
+        <div class="abcd d-flex align-items-center justify-content-center mb-2">
+            <a href="/listings">More like this →</a>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const emojis = document.querySelectorAll('.emoji');
+            const ratingInput = document.getElementById('rating');
+            emojis.forEach(emoji => {
+                emoji.addEventListener('click', () => {
+                    emojis.forEach(e => e.classList.remove('selected'));
+                    emoji.classList.add('selected');
+                    ratingInput.value = emoji.getAttribute('data-value');
+                });
+            });
+
+
+            document.querySelector(`[data-value="${ratingInput.value}"]`).classList.add('selected');
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const wishlistForm = document.getElementById("wishlist-form");
+    const sizeSelector = document.querySelectorAll('input[name="size"]');
+    const wishlistSizeInput = document.getElementById("wishlist-size");
+
+    // Listen to the form submit
+    wishlistForm.addEventListener("submit", function (event) {
+        let selectedSize = null;
+
+        // Find the selected size from the radio buttons
+        sizeSelector.forEach(sizeOption => {
+            if (sizeOption.checked) {
+                selectedSize = sizeOption.value;  // If a size is checked, store its value
+            }
+        });
+
+        if (!selectedSize) {
+            // If no size is selected, prevent form submission and alert the user
+            event.preventDefault();
+            alert("Please select a size before adding to Wishlist.");
+        } else {
+            // Update the hidden input with the selected size
+            wishlistSizeInput.value = selectedSize;
+        }
+    });
+});
+
+
+
+
+            // Prevent form submission if size is not selected
+            wishlistForm.addEventListener("submit", function (event) {
+                if (!wishlistSizeInput.value) {
+                    event.preventDefault();
+                    alert("Please select a size before adding to Wishlist.");
+                }
+            });
+
+
+
+          
+                    
+                        document.getElementById('rzp-button1').onclick = async function(e) {
+                            e.preventDefault();
+                    
+                            const response = await fetch("/payment/create-order", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" }
+                            });
+                    
+                            const order = await response.json();
+                    
+                            var options = {
+                                "key": order.key,
+                                "amount": order.amount * 100,
+                                "currency": order.currency,
+                                "name": "WanderLust Store",
+                                "description": "Complete your purchase",
+                                "order_id": order.orderId,
+                                "handler": async function (response) {
+                                    const verifyRes = await fetch("/payment/verify-payment", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify(response)
+                                    });
+                    
+                                    const result = await verifyRes.json();
+                                    if (result.success) {
+                                        alert("Payment Successful!");
+                                        window.location.href = result.redirectUrl;
+                                    } else {
+                                        alert("Payment Failed! Please try again.");
+                                    }
+                                },
+                                "theme": {
+                                    "color": "#3399cc"
+                                }
+                            };
+                    
+                            var rzp1 = new Razorpay(options);
+                            rzp1.open();
+                        }
+                    
+       
+    </script>
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</body>

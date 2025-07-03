@@ -1,0 +1,36 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <h1>Your Wishlist</h1>
+
+    <% if (wishlist && wishlist.items.length > 0) { %>
+        <div class="row">
+            <% wishlist.items.forEach(item => { %>
+                <% if (item.product) { %>
+                    <div class="col-md-4">
+                        <a href="/listings/<%= item.product._id %>" class="text-decoration-none">
+                            <div class="card">
+                                <img src="<%= item.product.image ? item.product.image : '/images/default.jpg' %>" 
+                                     class="card-img-top" 
+                                     alt="<%= item.product.title ? item.product.title : 'No Title' %>">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark"><%= item.product.title ? item.product.title : 'No Title' %></h5>
+                                    <p class="card-text text-muted">Size: <%= item.size ? item.size : 'N/A' %></p>
+                                </div>
+                            </div>
+                        </a>
+                        <form action="/wishlist/remove/<%= item.product._id %>" method="POST" class="mt-2">
+                            <input type="hidden" name="size" value="<%= item.size %>">
+                            <button type="submit" class="btn btn-danger">Remove from Wishlist</button>
+                        </form>
+                    </div>
+                <% } %>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <p>Your wishlist is empty.</p>
+    <% } %>
+
+    <div class="d-flex justify-content-center mb-3">
+        <a href="/listings">Continue Shopping →</a>
+    </div>
+</body>

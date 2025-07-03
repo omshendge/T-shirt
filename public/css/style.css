@@ -1,0 +1,156 @@
+
+body{
+    font-family: 'plus jakarta sans',sans-serif!important;
+    display:flex;
+    flex-direction: column; 
+    min-height: 100vh;
+    background-color: pink;
+}
+
+.container{
+    flex:1;
+}
+ 
+.navbar{
+    height:5rem;
+    background-color: white;
+
+}
+
+.fa-compass{
+    color:#fe424d;
+    font: size 2rem;
+
+}
+
+.nav-link{
+    color:#222222 !important;
+}
+
+.links{
+    text-decoration: none;
+    color:#222222;
+}
+
+.links a:hover{
+    text-decoration: underline;
+}
+
+.info{
+    height:8rem;
+    background-color:#ebebeb ;
+    display:flex ;
+    flex-wrap:wrap ;
+    justify-content: center;
+    align-items: space-evenly;
+    text-align: center;
+    
+}
+
+.links,.socials,.brand{
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.socials i{
+    
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+.listing-card{
+    border:none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+
+}
+
+.card-body{
+    padding:  0 !important;
+    
+}
+
+
+
+.abc{
+    text-decoration: none;
+}
+
+.card-img-overlay{
+    opacity:0;
+}
+
+
+.card-img-overlay:hover{
+    opacity:0.2;
+    background-color: white;
+}
+
+.btns{
+    display:flex;
+}
+
+.show-card{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.navbar{
+    display: flex;
+}
+
+
+.nav-item .nav-link:hover {
+    color: blue !important;
+}
+
+
+.product-image {
+    height: 400px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 10px;
+}
+.price {
+    font-weight: bold;
+    color: #ff5733;
+    font-size: 1.5rem;
+}
+.btn-cart {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+.rating-container {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    font-size: 32px;
+    cursor: pointer;
+}
+.emoji.selected {
+    transform: scale(1.3);
+}
+
+
+.abcd a:hover{
+    color:blue;
+
+}
+
+.def i:hover{
+    color:blue;
+
+}
+
+
+
+/* .abc a{
+    text-decoration: none;
+} */
